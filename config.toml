@@ -1,0 +1,38 @@
+baseURL = "https://fucfuc1011.github.io/"
+languageCode = "vi"
+title = "Blog Lập Trình - Phạm Thành Phúc"
+
+# Cấu hình Markdown
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    style = "monokai"
+
+# Menu điều hướng
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 2
+  
+  [[menu.main]]
+    name = "Profile"
+    url = "/profile/"
+    weight = 3
+
+# Thông tin tác giả
+[params]
+  author = "Phạm Thành Phúc"
+  description = "Blog chia sẻ kiến thức về Java và JavaScript"
+  github = "https://github.com/fucfuc1011"
+  
+# Cấu hình phân trang
+[params.pagination]
+  pagerSize = 9

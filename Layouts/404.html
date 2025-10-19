@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="container">
+    <div style="text-align: center; padding: 6rem 2rem; max-width: 600px; margin: 0 auto;">
+        <div style="font-size: 8rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 2rem; letter-spacing: -0.05em;">
+            404
+        </div>
+        
+        <h1 style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem;">
+            Oops! Trang không tồn tại
+        </h1>
+        
+        <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 2.5rem; line-height: 1.7;">
+            Xin lỗi, chúng tôi không thể tìm thấy trang bạn đang tìm kiếm.
+            Có thể nó đã bị di chuyển hoặc xóa.
+        </p>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: var(--primary-gradient); color: white; font-weight: 600; border-radius: 0.5rem; box-shadow: var(--shadow-red); transition: all 0.3s ease;">
+                <span>← Về trang chủ</span>
+            </a>
+            
+            <a href="/blog/" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: var(--bg-card); color: var(--primary); font-weight: 600; border-radius: 0.5rem; border: 2px solid var(--primary); transition: all 0.3s ease;">
+                <span>Xem bài viết</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+a:hover {
+    transform: translateY(-2px);
+}
+
+a:first-of-type:hover {
+    box-shadow: 0 15px 35px -5px rgba(220, 38, 38, 0.4);
+}
+
+a:last-of-type:hover {
+    background: var(--primary);
+    color: white;
+}
+</style>
+{{ end }}
