@@ -1,1065 +1,448 @@
-<!DOCTYPE html>
-<html lang="vi">
-
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Blog chia sẻ kiến thức về Java và JavaScript">
-    <title>Lập trình hướng đối tượng: Class và Object trong Java - Blog Lập Trình - Phạm Thành Phúc</title>
-     <link rel="stylesheet" href="/css/style.css">
-</head>
-
-<body>
-    <header class="site-header">
-    <div class="header-wrapper">
-        <div class="container">
-            <div class="header-content">
-                
-                
-                <div class="header-logo">
-                    <a href="/">
-                        <div class="logo-icon">⚡</div>
-                        <div class="logo-text">
-                            <div class="logo-title">Blog Lập Trình - Phạm Thành Phúc</div>
-                            <div class="logo-subtitle">Programming Blog</div>
-                        </div>
-                    </a>
-                </div>
-                
-                
-                <nav class="header-nav">
-                    
-                    
-                    <a href="/" class="nav-link ">
-                        Home
-                    </a>
-                    
-                    <a href="/blog/" class="nav-link ">
-                        Blog
-                    </a>
-                    
-                    <a href="/profile/" class="nav-link ">
-                        Profile
-                    </a>
-                    
-                </nav>
-                
-                
-                <div class="header-actions">
-                    
-                    <a href="https://github.com/fucfuc1011" target="_blank" rel="noopener" class="header-icon-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                    </a>
-                    
-                    
-                
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</header>
-
-<style>
- 
-.site-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.header-wrapper {
-    background: var(--gray-900);
-    border-bottom: 4px solid var(--primary);
-    position: relative;
-    overflow: hidden;
-}
-
-.header-wrapper::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.header-content {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 2rem;
-    align-items: center;
-    padding: 1.5rem 0;
-    position: relative;
-    z-index: 1;
-}
-
- 
-.header-logo a {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.logo-icon {
-    width: 55px;
-    height: 55px;
-    background: var(--primary-gradient);
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    box-shadow: var(--shadow-red);
-    position: relative;
-}
-
-.logo-icon::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--primary-gradient);
-    border-radius: var(--radius-lg);
-    opacity: 0.5;
-    filter: blur(15px);
-    z-index: -1;
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-title {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #DC2626 0%, #F97316 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-}
-
-.logo-subtitle {
-    font-size: 0.7rem;
-    color: #F87171;  
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 0.25rem;
-}
-
- 
-.header-nav {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    background: rgba(247, 247, 247, 0.05);
-    padding: 0.5rem;
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.nav-link {
-    padding: 0.75rem 1.75rem;
-    border-radius: var(--radius-md);
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 0.9375rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
-}
-
-.nav-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgb(29, 22, 22);
-}
-
-.nav-link.active {
-    background: var(--primary-gradient);
-    color: rgb(32, 24, 24);
-    box-shadow: var(--shadow-red);
-}
-
- 
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.header-icon-btn {
-    width: 44px;
-    height: 44px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #010102;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.header-icon-btn:hover {
-    background: var(--primary);
-    color: rgb(29, 25, 25);
-    border-color: var(--primary);
-    transform: translateY(-2px);
-}
-
-.header-subscribe-btn {
-    padding: 0.75rem 1.5rem;
-    background: rgb(255, 255, 255);
-    color: var(--gray-900);
-    font-weight: 700;
-    border-radius: var(--radius-md);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.875rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
-    white-space: nowrap;
-}
-
-.header-subscribe-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
-}
-
- 
-@media (max-width: 1024px) {
-    .header-content {
-        grid-template-columns: auto 1fr;
-        gap: 1rem;
-    }
-    
-    .header-actions {
-        grid-column: 1 / -1;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 768px) {
-    .header-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .header-logo a {
-        justify-content: center;
-    }
-    
-    .header-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .nav-link {
-        padding: 0.625rem 1.25rem;
-        font-size: 0.875rem;
-    }
-    
-    .header-actions {
-        justify-content: center;
-    }
-}
-</style>
-
-    <main class="main-content">
-        
-<div class="container">
-    <article class="post">
-        <header class="post-header">
-            <span class="post-category-badge">Java</span>
-            <h1 class="post-title">Lập trình hướng đối tượng: Class và Object trong Java</h1>
-            <div class="post-meta-info">
-                <span>📅 04 October, 2023</span>
-                <span>•</span>
-                <span>⏱️ 5 phút đọc</span>
-                <span>•</span>
-                <span>👨‍💻 Phạm Thành Phúc</span>
-            </div>
-        </header>
-
-        <div class="post-content">
-            <h2 id="lập-trình-hướng-đối-tượng-oop-là-gì">Lập trình hướng đối tượng (OOP) là gì?</h2>
-<p>OOP (Object-Oriented Programming) là một phương pháp lập trình dựa trên khái niệm về các đối tượng (objects) và lớp (classes). Mỗi đối tượng có:</p>
-<ul>
-<li><strong>Thuộc tính (Attributes)</strong>: Đặc điểm, tính chất</li>
-<li><strong>Phương thức (Methods)</strong>: Hành vi, chức năng</li>
-</ul>
-<h2 id="class-và-object">Class và Object</h2>
-<h3 id="class-lớp">Class (Lớp)</h3>
-<p>Class là bản thiết kế hoặc khuôn mẫu để tạo ra các object.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SinhVien</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Thuộc tính (Attributes)</span>
-</span></span><span style="display:flex;"><span>    String ten;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> tuoi;
-</span></span><span style="display:flex;"><span>    String maSV;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> diemTB;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Phương thức (Methods)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">hienThiThongTin</span>() {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Tên: &#34;</span> <span style="color:#f92672">+</span> ten);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Tuổi: &#34;</span> <span style="color:#f92672">+</span> tuoi);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Mã SV: &#34;</span> <span style="color:#f92672">+</span> maSV);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Điểm TB: &#34;</span> <span style="color:#f92672">+</span> diemTB);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">hoc</span>() {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(ten <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; đang học bài&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="object-đối-tượng">Object (Đối tượng)</h3>
-<p>Object là thể hiện cụ thể của một class.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Tạo object từ class SinhVien</span>
-</span></span><span style="display:flex;"><span>        SinhVien sv1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SinhVien();
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Gán giá trị cho thuộc tính</span>
-</span></span><span style="display:flex;"><span>        sv1.<span style="color:#a6e22e">ten</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Nguyễn Văn An&#34;</span>;
-</span></span><span style="display:flex;"><span>        sv1.<span style="color:#a6e22e">tuoi</span> <span style="color:#f92672">=</span> 20;
-</span></span><span style="display:flex;"><span>        sv1.<span style="color:#a6e22e">maSV</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SV001&#34;</span>;
-</span></span><span style="display:flex;"><span>        sv1.<span style="color:#a6e22e">diemTB</span> <span style="color:#f92672">=</span> 8.<span style="color:#a6e22e">5</span>;
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Gọi phương thức</span>
-</span></span><span style="display:flex;"><span>        sv1.<span style="color:#a6e22e">hienThiThongTin</span>();
-</span></span><span style="display:flex;"><span>        sv1.<span style="color:#a6e22e">hoc</span>();
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="constructor-hàm-khởi-tạo">Constructor (Hàm khởi tạo)</h2>
-<p>Constructor là phương thức đặc biệt được gọi khi tạo object.</p>
-<h3 id="constructor-mặc-định">Constructor mặc định:</h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SinhVien</span> {
-</span></span><span style="display:flex;"><span>    String ten;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> tuoi;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Constructor mặc định</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SinhVien</span>() {
-</span></span><span style="display:flex;"><span>        ten <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Chưa có tên&#34;</span>;
-</span></span><span style="display:flex;"><span>        tuoi <span style="color:#f92672">=</span> 0;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="constructor-có-tham-số">Constructor có tham số:</h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SinhVien</span> {
-</span></span><span style="display:flex;"><span>    String ten;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> tuoi;
-</span></span><span style="display:flex;"><span>    String maSV;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> diemTB;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Constructor có tham số</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SinhVien</span>(String ten, <span style="color:#66d9ef">int</span> tuoi, String maSV, <span style="color:#66d9ef">double</span> diemTB) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ten</span> <span style="color:#f92672">=</span> ten;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">tuoi</span> <span style="color:#f92672">=</span> tuoi;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">maSV</span> <span style="color:#f92672">=</span> maSV;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">diemTB</span> <span style="color:#f92672">=</span> diemTB;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">hienThiThongTin</span>() {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Tên: &#34;</span> <span style="color:#f92672">+</span> ten);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Tuổi: &#34;</span> <span style="color:#f92672">+</span> tuoi);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Mã SV: &#34;</span> <span style="color:#f92672">+</span> maSV);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Điểm TB: &#34;</span> <span style="color:#f92672">+</span> diemTB);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Sử dụng</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>        SinhVien sv1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SinhVien(<span style="color:#e6db74">&#34;Trần Thị Bình&#34;</span>, 21, <span style="color:#e6db74">&#34;SV002&#34;</span>, 9.<span style="color:#a6e22e">0</span>);
-</span></span><span style="display:flex;"><span>        sv1.<span style="color:#a6e22e">hienThiThongTin</span>();
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="từ-khóa-this">Từ khóa this</h2>
-<p><code>this</code> đại diện cho object hiện tại.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HinhChuNhat</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> chieuDai;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> chieuRong;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">HinhChuNhat</span>(<span style="color:#66d9ef">double</span> chieuDai, <span style="color:#66d9ef">double</span> chieuRong) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chieuDai</span> <span style="color:#f92672">=</span> chieuDai;  <span style="color:#75715e">// this.chieuDai là thuộc tính</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chieuRong</span> <span style="color:#f92672">=</span> chieuRong; <span style="color:#75715e">// chieuRong là tham số</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">tinhDienTich</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chieuDai</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chieuRong</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">tinhChuVi</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> 2 <span style="color:#f92672">*</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chieuDai</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chieuRong</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="access-modifiers-phạm-vi-truy-cập">Access Modifiers (Phạm vi truy cập)</h2>
-<p>Java có 4 loại access modifiers:</p>
-<table>
-  <thead>
-      <tr>
-          <th>Modifier</th>
-          <th>Trong class</th>
-          <th>Trong package</th>
-          <th>Ngoài package (subclass)</th>
-          <th>Mọi nơi</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>private</td>
-          <td>✓</td>
-          <td>✗</td>
-          <td>✗</td>
-          <td>✗</td>
-      </tr>
-      <tr>
-          <td>default</td>
-          <td>✓</td>
-          <td>✓</td>
-          <td>✗</td>
-          <td>✗</td>
-      </tr>
-      <tr>
-          <td>protected</td>
-          <td>✓</td>
-          <td>✓</td>
-          <td>✓</td>
-          <td>✗</td>
-      </tr>
-      <tr>
-          <td>public</td>
-          <td>✓</td>
-          <td>✓</td>
-          <td>✓</td>
-          <td>✓</td>
-      </tr>
-  </tbody>
-</table>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String name;      <span style="color:#75715e">// Chỉ truy cập trong class</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> age;           <span style="color:#75715e">// Truy cập mọi nơi</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> String address; <span style="color:#75715e">// Truy cập trong package và subclass</span>
-</span></span><span style="display:flex;"><span>    String phone;            <span style="color:#75715e">// default - Truy cập trong package</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="getter-và-setter">Getter và Setter</h2>
-<p>Để truy cập thuộc tính private, ta dùng getter và setter:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NhanVien</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String ten;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">double</span> luong;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Constructor</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">NhanVien</span>(String ten, <span style="color:#66d9ef">double</span> luong) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ten</span> <span style="color:#f92672">=</span> ten;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">luong</span> <span style="color:#f92672">=</span> luong;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Getter cho ten</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getTen</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ten;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Setter cho ten</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setTen</span>(String ten) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ten</span> <span style="color:#f92672">=</span> ten;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Getter cho luong</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">getLuong</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> luong;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Setter cho luong (có validation)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setLuong</span>(<span style="color:#66d9ef">double</span> luong) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (luong <span style="color:#f92672">&gt;</span> 0) {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">luong</span> <span style="color:#f92672">=</span> luong;
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Lương phải lớn hơn 0!&#34;</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">hienThiThongTin</span>() {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Tên: &#34;</span> <span style="color:#f92672">+</span> ten);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Lương: &#34;</span> <span style="color:#f92672">+</span> luong);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Sử dụng</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>        NhanVien nv <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> NhanVien(<span style="color:#e6db74">&#34;Lê Văn Cường&#34;</span>, 15000000);
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Lương hiện tại: &#34;</span> <span style="color:#f92672">+</span> nv.<span style="color:#a6e22e">getLuong</span>());
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Thay đổi lương</span>
-</span></span><span style="display:flex;"><span>        nv.<span style="color:#a6e22e">setLuong</span>(18000000);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Lương mới: &#34;</span> <span style="color:#f92672">+</span> nv.<span style="color:#a6e22e">getLuong</span>());
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="ví-dụ-thực-tế-quản-lý-tài-khoản-ngân-hàng">Ví dụ thực tế: Quản lý Tài khoản ngân hàng</h2>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TaiKhoanNganHang</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String soTaiKhoan;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String chuTaiKhoan;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">double</span> soDu;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Constructor</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">TaiKhoanNganHang</span>(String soTaiKhoan, String chuTaiKhoan) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">soTaiKhoan</span> <span style="color:#f92672">=</span> soTaiKhoan;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chuTaiKhoan</span> <span style="color:#f92672">=</span> chuTaiKhoan;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">soDu</span> <span style="color:#f92672">=</span> 0;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Nạp tiền</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">napTien</span>(<span style="color:#66d9ef">double</span> soTien) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (soTien <span style="color:#f92672">&gt;</span> 0) {
-</span></span><span style="display:flex;"><span>            soDu <span style="color:#f92672">+=</span> soTien;
-</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Nạp thành công &#34;</span> <span style="color:#f92672">+</span> soTien <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; VNĐ&#34;</span>);
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Số tiền không hợp lệ!&#34;</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Rút tiền</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rutTien</span>(<span style="color:#66d9ef">double</span> soTien) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (soTien <span style="color:#f92672">&gt;</span> 0 <span style="color:#f92672">&amp;&amp;</span> soTien <span style="color:#f92672">&lt;=</span> soDu) {
-</span></span><span style="display:flex;"><span>            soDu <span style="color:#f92672">-=</span> soTien;
-</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Rút thành công &#34;</span> <span style="color:#f92672">+</span> soTien <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; VNĐ&#34;</span>);
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Không đủ số dư hoặc số tiền không hợp lệ!&#34;</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Kiểm tra số dư</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">kiemTraSoDu</span>() {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Số dư hiện tại: &#34;</span> <span style="color:#f92672">+</span> soDu <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; VNĐ&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Getter</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getSoTaiKhoan</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> soTaiKhoan;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getChuTaiKhoan</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> chuTaiKhoan;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">getSoDu</span>() {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> soDu;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Sử dụng</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>        TaiKhoanNganHang tk <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TaiKhoanNganHang(<span style="color:#e6db74">&#34;0123456789&#34;</span>, <span style="color:#e6db74">&#34;Phạm Thành Phúc&#34;</span>);
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        tk.<span style="color:#a6e22e">napTien</span>(5000000);
-</span></span><span style="display:flex;"><span>        tk.<span style="color:#a6e22e">kiemTraSoDu</span>();
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        tk.<span style="color:#a6e22e">rutTien</span>(2000000);
-</span></span><span style="display:flex;"><span>        tk.<span style="color:#a6e22e">kiemTraSoDu</span>();
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        tk.<span style="color:#a6e22e">rutTien</span>(4000000); <span style="color:#75715e">// Không đủ tiền</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="4-tính-chất-của-oop">4 Tính chất của OOP</h2>
-<h3 id="1-encapsulation-đóng-gói">1. Encapsulation (Đóng gói)</h3>
-<p>Che giấu thông tin bên trong object, chỉ cho phép truy cập thông qua các phương thức public.</p>
-<h3 id="2-inheritance-kế-thừa">2. Inheritance (Kế thừa)</h3>
-<p>Class con có thể kế thừa thuộc tính và phương thức của class cha.</p>
-<h3 id="3-polymorphism-đa-hình">3. Polymorphism (Đa hình)</h3>
-<p>Một phương thức có thể có nhiều hình thức khác nhau.</p>
-<h3 id="4-abstraction-trừu-tượng">4. Abstraction (Trừu tượng)</h3>
-<p>Che giấu chi tiết phức tạp, chỉ hiển thị những gì cần thiết.</p>
-<h2 id="kết-luận">Kết luận</h2>
-<p>Class và Object là nền tảng của lập trình hướng đối tượng trong Java. Việc hiểu rõ cách tạo và sử dụng class, object, constructor, và các access modifiers sẽ giúp bạn xây dựng các chương trình Java mạnh mẽ và dễ bảo trì. Trong bài viết tiếp theo, chúng ta sẽ tìm hiểu về Collections Framework trong Java!</p>
-
-        </div>
-
-        
-        <nav style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 4rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-            
-            <a href="http://localhost:1313/blog/java-collections/" style="display: flex; flex-direction: column; gap: 0.75rem; padding: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); transition: all 0.3s ease; box-shadow: var(--shadow-sm);">
-                <span style="color: var(--primary); font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em;">← Bài trước</span>
-                <span style="color: var(--text-primary); font-weight: 600; font-size: 1.125rem; line-height: 1.4;">Collections Framework trong Java</span>
-            </a>
-            
-
-            
-            <a href="http://localhost:1313/blog/javascript-gioi-thieu/" style="display: flex; flex-direction: column; gap: 0.75rem; padding: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); transition: all 0.3s ease; box-shadow: var(--shadow-sm); text-align: right;">
-                <span style="color: var(--primary); font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em;">Bài sau →</span>
-                <span style="color: var(--text-primary); font-weight: 600; font-size: 1.125rem; line-height: 1.4;">JavaScript là gì? Bắt đầu với JavaScript</span>
-            </a>
-            
-        </nav>
-    </article>
-</div>
-
-<style>
-nav a:hover {
-    border-color: var(--primary);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-}
-</style>
-
-    </main>
-
-    <footer class="beautiful-footer">
-    <div
-        style="background: var(--gray-900); border-top: 4px solid var(--primary); position: relative; overflow: hidden;">
-
-        
-        <div
-            style="position: absolute; top: -80px; left: 10%; width: 250px; height: 250px; background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%); border-radius: 50%;">
-        </div>
-        <div
-            style="position: absolute; bottom: -100px; right: 10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(253, 253, 253, 0.08) 0%, transparent 70%); border-radius: 50%;">
-        </div>
-
-        <div class="container">
-            <div style="position: relative; z-index: 1; padding: 4rem 0 3rem;">
-
-                
-                <div
-                    style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); border-radius: var(--radius-2xl); padding: 3rem; text-align: center; margin-bottom: 4rem; box-shadow: var(--shadow-xl);">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
-                    <h3
-                        style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: rgb(255, 255, 255); margin-bottom: 0.75rem;">
-                        Đăng ký nhận bài viết mới
-                    </h3>
-                    <p
-                        style="color: rgba(255, 255, 255, 0.9); font-size: 1.125rem; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
-                        Nhận thông báo khi có bài viết mới về Java và JavaScript
-                    </p>
-
-                    <form style="display: flex; gap: 1rem; max-width: 500px; margin: 0 auto;">
-                        <input type="email" placeholder="Email của bạn"
-                            style="flex: 1; padding: 1rem 1.5rem; background: rgb(255, 255, 255); border: none; border-radius: var(--radius-md); color: var(--gray-900); font-size: 1rem; outline: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-                        <button type="submit"
-                            style="padding: 1rem 2rem; background: var(--gray-900); color: rgb(255, 255, 255); border: none; border-radius: var(--radius-md); font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; white-space: nowrap;"
-                            onmouseover="this.style.transform='scale(1.05)';"
-                            onmouseout="this.style.transform='scale(1)';">
-                            Đăng ký
-                        </button>
-                    </form>
-
-                    <p style="color: rgb(0, 0, 0); font-size: 0.875rem; margin-top: 1rem;">
-                        ✨ Miễn phí • Không spam
-                    </p>
-                </div>
-
-                
-                <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
-
-                    
-                    <div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                            <div
-                                style="width: 45px; height: 45px; background: var(--primary-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: var(--shadow-red);">
-                                ⚡
-                            </div>
-                            <span style="font-size: 1.375rem; font-weight: 800; color: rgb(226, 226, 226);">Blog Lập Trình - Phạm Thành Phúc</span>
-                        </div>
-                        <p style="color: #ffffff; line-height: 1.7; margin-bottom: 1.5rem; font-size: 0.9375rem;">
-                            Blog chia sẻ kiến thức về Java và JavaScript.
-                            Học lập trình một cách dễ hiểu và thực tế.
-                        </p>
-                        <div style="display: flex; gap: 0.75rem;">
-                            
-                            <a href="https://github.com/fucfuc1011" target="_blank" rel="noopener"
-                                style="width: 42px; height: 42px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: #D1D5DB; transition: all 0.3s ease;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                </svg>
-                            </a>
-                            
-                            <a href="mailto:contact@example.com"
-                                style="width: 42px; height: 42px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: #D1D5DB; transition: all 0.3s ease;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                    <polyline points="22,6 12,13 2,6" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-
-                    
-                    <div>
-                        <h3
-                            style="color: rgb(255, 255, 255); font-weight: 700; font-size: 1.125rem; margin-bottom: 1.5rem;">
-                            Liên kết</h3>
-                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.875rem;">
-                            <li><a href="/"
-                                    style="color: #ffffff; font-size: 0.9375rem; transition: all 0.3s ease;">Trang
-                                    chủ</a></li>
-                            <li><a href="/blog/"
-                                    style="color: #ffffff; font-size: 0.9375rem; transition: all 0.3s ease;">Blog</a>
-                            </li>
-                            <li><a href="/profile/"
-                                    style="color: #ffffff; font-size: 0.9375rem; transition: all 0.3s ease;">Giới
-                                    thiệu</a></li>
-                        </ul>
-                    </div>
-
-                    
-                    <div>
-                        <h3
-                            style="color: rgb(255, 255, 255); font-weight: 700; font-size: 1.125rem; margin-bottom: 1.5rem;">
-                            Chủ đề</h3>
-                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.875rem;">
-                            <li>
-                                <a href="/blog/"
-                                    style="color: #9CA3AF; font-size: 0.9375rem; transition: all 0.3s ease; display: flex; justify-content: space-between; align-items: center;">
-                                    <span>☕ Java</span>
-                                    <span
-                                        style="background: rgba(255, 255, 255, 0.1); padding: 0.25rem 0.625rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">5</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/blog/"
-                                    style="color: #9CA3AF; font-size: 0.9375rem; transition: all 0.3s ease; display: flex; justify-content: space-between; align-items: center;">
-                                    <span>⚡ JavaScript</span>
-                                    <span
-                                        style="background: rgba(255, 255, 255, 0.1); padding: 0.25rem 0.625rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">4</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                
-                <div
-                    style="padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
-                    <p style="color: #9CA3AF; font-size: 0.875rem;">
-                        © 2025 <strong style="color: rgb(212, 24, 24);">Phạm Thành Phúc</strong>.
-                        All rights reserved.
-                    </p>
-                    <p style="color: #6B7280; font-size: 0.875rem;">
-                        ⚡ Code by <strong
-                            style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Phạm
-                            Thành Phúc</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<style>
-    .beautiful-footer a:hover {
-        color: var(--primary-light) !important;
-    }
-
-    .beautiful-footer a[style*="width: 42px"]:hover {
-        background: var(--primary) !important;
-        border-color: var(--primary) !important;
-        transform: translateY(-2px);
-    }
-
-    @media (max-width: 1024px) {
-        .beautiful-footer>div>.container>div>div:nth-child(2) {
-            grid-template-columns: 1fr 1fr !important;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .beautiful-footer>div>.container>div>div:first-child form {
-            flex-direction: column;
-        }
-
-        .beautiful-footer>div>.container>div>div:first-child form button {
-            width: 100%;
-        }
-
-        .beautiful-footer>div>.container>div>div:nth-child(2) {
-            grid-template-columns: 1fr !important;
-        }
-
-        .beautiful-footer>div>.container>div>div:last-child {
-            flex-direction: column !important;
-            gap: 1rem;
-            text-align: center;
-        }
-    }
-</style>
-
-    
-    <script src="/js/main.js"></script>
-</body>
-
-</html>
+<!doctype html><html lang=vi><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Blog chia sẻ kiến thức về Java và JavaScript"><title>Lập trình hướng đối tượng: Class và Object trong Java - Blog Lập Trình - Phạm Thành Phúc</title><link rel=stylesheet href=/css/style.css></head><body><header class=site-header><div class=header-wrapper><div class=container><div class=header-content><div class=header-logo><a href=/><div class=logo-icon>⚡</div><div class=logo-text><div class=logo-title>Blog Lập Trình - Phạm Thành Phúc</div><div class=logo-subtitle>Programming Blog</div></div></a></div><nav class=header-nav><a href=/ class=nav-link>Home
+</a><a href=/blog/ class=nav-link>Blog
+</a><a href=/profile/ class=nav-link>Profile</a></nav><div class=header-actions><a href=https://github.com/fucfuc1011 target=_blank rel=noopener class=header-icon-btn><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374.0.0 5.373.0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931.0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176.0.0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221.0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a></div></div></div></div></header><style>.site-header{position:sticky;top:0;z-index:1000}.header-wrapper{background:var(--gray-900);border-bottom:4px solid var(--primary);position:relative;overflow:hidden}.header-wrapper::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(220,38,38,.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}.header-content{display:grid;grid-template-columns:auto 1fr auto;gap:2rem;align-items:center;padding:1.5rem 0;position:relative;z-index:1}.header-logo a{display:flex;align-items:center;gap:1rem}.logo-icon{width:55px;height:55px;background:var(--primary-gradient);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:var(--shadow-red);position:relative}.logo-icon::after{content:'';position:absolute;inset:0;background:var(--primary-gradient);border-radius:var(--radius-lg);opacity:.5;filter:blur(15px);z-index:-1}.logo-text{display:flex;flex-direction:column}.logo-title{font-family:var(--font-display);font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#DC2626 0%,#F97316 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}.logo-subtitle{font-size:.7rem;color:#f87171;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-top:.25rem}.header-nav{display:flex;gap:.5rem;justify-content:center;background:rgba(247,247,247,5%);padding:.5rem;border-radius:var(--radius-lg);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1)}.nav-link{padding:.75rem 1.75rem;border-radius:var(--radius-md);color:#fff;font-weight:600;font-size:.9375rem;transition:all .3s cubic-bezier(.4,0,.2,1);white-space:nowrap}.nav-link:hover{background:rgba(255,255,255,.1);color:#1d1616}.nav-link.active{background:var(--primary-gradient);color:#201818;box-shadow:var(--shadow-red)}.header-actions{display:flex;align-items:center;gap:1rem}.header-icon-btn{width:44px;height:44px;background:rgba(255,255,255,5%);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:#010102;transition:all .3s ease;backdrop-filter:blur(10px)}.header-icon-btn:hover{background:var(--primary);color:#1d1919;border-color:var(--primary);transform:translateY(-2px)}.header-subscribe-btn{padding:.75rem 1.5rem;background:#fff;color:var(--gray-900);font-weight:700;border-radius:var(--radius-md);border:none;cursor:pointer;transition:all .3s ease;font-size:.875rem;display:flex;align-items:center;gap:.5rem;box-shadow:0 4px 12px rgba(255,255,255,.2);white-space:nowrap}.header-subscribe-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,255,255,.3)}@media(max-width:1024px){.header-content{grid-template-columns:auto 1fr;gap:1rem}.header-actions{grid-column:1/-1;justify-content:center}}@media(max-width:768px){.header-content{grid-template-columns:1fr;text-align:center}.header-logo a{justify-content:center}.header-nav{flex-wrap:wrap;justify-content:center}.nav-link{padding:.625rem 1.25rem;font-size:.875rem}.header-actions{justify-content:center}}</style><main class=main-content><div class=container><article class=post><header class=post-header><span class=post-category-badge>Java</span><h1 class=post-title>Lập trình hướng đối tượng: Class và Object trong Java</h1><div class=post-meta-info><span>📅 04 October, 2023</span>
+<span>•</span>
+<span>⏱️ 5 phút đọc</span>
+<span>•</span>
+<span>👨‍💻 Phạm Thành Phúc</span></div></header><div class=post-content><h2 id=lập-trình-hướng-đối-tượng-oop-là-gì>Lập trình hướng đối tượng (OOP) là gì?</h2><p>OOP (Object-Oriented Programming) là một phương pháp lập trình dựa trên khái niệm về các đối tượng (objects) và lớp (classes). Mỗi đối tượng có:</p><ul><li><strong>Thuộc tính (Attributes)</strong>: Đặc điểm, tính chất</li><li><strong>Phương thức (Methods)</strong>: Hành vi, chức năng</li></ul><h2 id=class-và-object>Class và Object</h2><h3 id=class-lớp>Class (Lớp)</h3><p>Class là bản thiết kế hoặc khuôn mẫu để tạo ra các object.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SinhVien</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Thuộc tính (Attributes)</span>
+</span></span><span style=display:flex><span>    String ten;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> tuoi;
+</span></span><span style=display:flex><span>    String maSV;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> diemTB;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Phương thức (Methods)</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>hienThiThongTin</span>() {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Tên: &#34;</span> <span style=color:#f92672>+</span> ten);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Tuổi: &#34;</span> <span style=color:#f92672>+</span> tuoi);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Mã SV: &#34;</span> <span style=color:#f92672>+</span> maSV);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Điểm TB: &#34;</span> <span style=color:#f92672>+</span> diemTB);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>hoc</span>() {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(ten <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; đang học bài&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=object-đối-tượng>Object (Đối tượng)</h3><p>Object là thể hiện cụ thể của một class.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Main</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Tạo object từ class SinhVien</span>
+</span></span><span style=display:flex><span>        SinhVien sv1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> SinhVien();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Gán giá trị cho thuộc tính</span>
+</span></span><span style=display:flex><span>        sv1.<span style=color:#a6e22e>ten</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Nguyễn Văn An&#34;</span>;
+</span></span><span style=display:flex><span>        sv1.<span style=color:#a6e22e>tuoi</span> <span style=color:#f92672>=</span> 20;
+</span></span><span style=display:flex><span>        sv1.<span style=color:#a6e22e>maSV</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;SV001&#34;</span>;
+</span></span><span style=display:flex><span>        sv1.<span style=color:#a6e22e>diemTB</span> <span style=color:#f92672>=</span> 8.<span style=color:#a6e22e>5</span>;
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Gọi phương thức</span>
+</span></span><span style=display:flex><span>        sv1.<span style=color:#a6e22e>hienThiThongTin</span>();
+</span></span><span style=display:flex><span>        sv1.<span style=color:#a6e22e>hoc</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=constructor-hàm-khởi-tạo>Constructor (Hàm khởi tạo)</h2><p>Constructor là phương thức đặc biệt được gọi khi tạo object.</p><h3 id=constructor-mặc-định>Constructor mặc định:</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SinhVien</span> {
+</span></span><span style=display:flex><span>    String ten;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> tuoi;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Constructor mặc định</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>SinhVien</span>() {
+</span></span><span style=display:flex><span>        ten <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Chưa có tên&#34;</span>;
+</span></span><span style=display:flex><span>        tuoi <span style=color:#f92672>=</span> 0;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=constructor-có-tham-số>Constructor có tham số:</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SinhVien</span> {
+</span></span><span style=display:flex><span>    String ten;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> tuoi;
+</span></span><span style=display:flex><span>    String maSV;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> diemTB;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Constructor có tham số</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>SinhVien</span>(String ten, <span style=color:#66d9ef>int</span> tuoi, String maSV, <span style=color:#66d9ef>double</span> diemTB) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ten</span> <span style=color:#f92672>=</span> ten;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>tuoi</span> <span style=color:#f92672>=</span> tuoi;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>maSV</span> <span style=color:#f92672>=</span> maSV;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>diemTB</span> <span style=color:#f92672>=</span> diemTB;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>hienThiThongTin</span>() {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Tên: &#34;</span> <span style=color:#f92672>+</span> ten);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Tuổi: &#34;</span> <span style=color:#f92672>+</span> tuoi);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Mã SV: &#34;</span> <span style=color:#f92672>+</span> maSV);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Điểm TB: &#34;</span> <span style=color:#f92672>+</span> diemTB);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Sử dụng</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Main</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
+</span></span><span style=display:flex><span>        SinhVien sv1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> SinhVien(<span style=color:#e6db74>&#34;Trần Thị Bình&#34;</span>, 21, <span style=color:#e6db74>&#34;SV002&#34;</span>, 9.<span style=color:#a6e22e>0</span>);
+</span></span><span style=display:flex><span>        sv1.<span style=color:#a6e22e>hienThiThongTin</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=từ-khóa-this>Từ khóa this</h2><p><code>this</code> đại diện cho object hiện tại.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>HinhChuNhat</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> chieuDai;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> chieuRong;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>HinhChuNhat</span>(<span style=color:#66d9ef>double</span> chieuDai, <span style=color:#66d9ef>double</span> chieuRong) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>chieuDai</span> <span style=color:#f92672>=</span> chieuDai;  <span style=color:#75715e>// this.chieuDai là thuộc tính</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>chieuRong</span> <span style=color:#f92672>=</span> chieuRong; <span style=color:#75715e>// chieuRong là tham số</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> <span style=color:#a6e22e>tinhDienTich</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>chieuDai</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>chieuRong</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> <span style=color:#a6e22e>tinhChuVi</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> 2 <span style=color:#f92672>*</span> (<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>chieuDai</span> <span style=color:#f92672>+</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>chieuRong</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=access-modifiers-phạm-vi-truy-cập>Access Modifiers (Phạm vi truy cập)</h2><p>Java có 4 loại access modifiers:</p><table><thead><tr><th>Modifier</th><th>Trong class</th><th>Trong package</th><th>Ngoài package (subclass)</th><th>Mọi nơi</th></tr></thead><tbody><tr><td>private</td><td>✓</td><td>✗</td><td>✗</td><td>✗</td></tr><tr><td>default</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td></tr><tr><td>protected</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td></tr><tr><td>public</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr></tbody></table><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String name;      <span style=color:#75715e>// Chỉ truy cập trong class</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> age;           <span style=color:#75715e>// Truy cập mọi nơi</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>protected</span> String address; <span style=color:#75715e>// Truy cập trong package và subclass</span>
+</span></span><span style=display:flex><span>    String phone;            <span style=color:#75715e>// default - Truy cập trong package</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=getter-và-setter>Getter và Setter</h2><p>Để truy cập thuộc tính private, ta dùng getter và setter:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NhanVien</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String ten;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>double</span> luong;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Constructor</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>NhanVien</span>(String ten, <span style=color:#66d9ef>double</span> luong) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ten</span> <span style=color:#f92672>=</span> ten;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>luong</span> <span style=color:#f92672>=</span> luong;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Getter cho ten</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getTen</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> ten;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Setter cho ten</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setTen</span>(String ten) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ten</span> <span style=color:#f92672>=</span> ten;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Getter cho luong</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>double</span> <span style=color:#a6e22e>getLuong</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> luong;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Setter cho luong (có validation)</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setLuong</span>(<span style=color:#66d9ef>double</span> luong) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (luong <span style=color:#f92672>&gt;</span> 0) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>luong</span> <span style=color:#f92672>=</span> luong;
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Lương phải lớn hơn 0!&#34;</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>hienThiThongTin</span>() {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Tên: &#34;</span> <span style=color:#f92672>+</span> ten);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Lương: &#34;</span> <span style=color:#f92672>+</span> luong);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Sử dụng</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Main</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
+</span></span><span style=display:flex><span>        NhanVien nv <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> NhanVien(<span style=color:#e6db74>&#34;Lê Văn Cường&#34;</span>, 15000000);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Lương hiện tại: &#34;</span> <span style=color:#f92672>+</span> nv.<span style=color:#a6e22e>getLuong</span>());
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Thay đổi lương</span>
+</span></span><span style=display:flex><span>        nv.<span style=color:#a6e22e>setLuong</span>(18000000);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Lương mới: &#34;</span> <span style=color:#f92672>+</span> nv.<span style=color:#a6e22e>getLuong</span>());
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=ví-dụ-thực-tế-quản-lý-tài-khoản-ngân-hàng>Ví dụ thực tế: Quản lý Tài khoản ngân hàng</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TaiKhoanNganHang</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String soTaiKhoan;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String chuTaiKhoan;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>double</span> soDu;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Constructor</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>TaiKhoanNganHang</span>(String soTaiKhoan, String chuTaiKhoan) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>soTaiKhoan</span> <span style=color:#f92672>=</span> soTaiKhoan;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>chuTaiKhoan</span> <span style=color:#f92672>=</span> chuTaiKhoan;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>soDu</span> <span style=color:#f92672>=</span> 0;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Nạp tiền</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>napTien</span>(<span style=color:#66d9ef>double</span> soTien) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (soTien <span style=color:#f92672>&gt;</span> 0) {
+</span></span><span style=display:flex><span>            soDu <span style=color:#f92672>+=</span> soTien;
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Nạp thành công &#34;</span> <span style=color:#f92672>+</span> soTien <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; VNĐ&#34;</span>);
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Số tiền không hợp lệ!&#34;</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Rút tiền</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>rutTien</span>(<span style=color:#66d9ef>double</span> soTien) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (soTien <span style=color:#f92672>&gt;</span> 0 <span style=color:#f92672>&amp;&amp;</span> soTien <span style=color:#f92672>&lt;=</span> soDu) {
+</span></span><span style=display:flex><span>            soDu <span style=color:#f92672>-=</span> soTien;
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Rút thành công &#34;</span> <span style=color:#f92672>+</span> soTien <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; VNĐ&#34;</span>);
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Không đủ số dư hoặc số tiền không hợp lệ!&#34;</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Kiểm tra số dư</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>kiemTraSoDu</span>() {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Số dư hiện tại: &#34;</span> <span style=color:#f92672>+</span> soDu <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; VNĐ&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Getter</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getSoTaiKhoan</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> soTaiKhoan;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getChuTaiKhoan</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> chuTaiKhoan;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>double</span> <span style=color:#a6e22e>getSoDu</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> soDu;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Sử dụng</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Main</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
+</span></span><span style=display:flex><span>        TaiKhoanNganHang tk <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> TaiKhoanNganHang(<span style=color:#e6db74>&#34;0123456789&#34;</span>, <span style=color:#e6db74>&#34;Phạm Thành Phúc&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        tk.<span style=color:#a6e22e>napTien</span>(5000000);
+</span></span><span style=display:flex><span>        tk.<span style=color:#a6e22e>kiemTraSoDu</span>();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        tk.<span style=color:#a6e22e>rutTien</span>(2000000);
+</span></span><span style=display:flex><span>        tk.<span style=color:#a6e22e>kiemTraSoDu</span>();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        tk.<span style=color:#a6e22e>rutTien</span>(4000000); <span style=color:#75715e>// Không đủ tiền</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=4-tính-chất-của-oop>4 Tính chất của OOP</h2><h3 id=1-encapsulation-đóng-gói>1. Encapsulation (Đóng gói)</h3><p>Che giấu thông tin bên trong object, chỉ cho phép truy cập thông qua các phương thức public.</p><h3 id=2-inheritance-kế-thừa>2. Inheritance (Kế thừa)</h3><p>Class con có thể kế thừa thuộc tính và phương thức của class cha.</p><h3 id=3-polymorphism-đa-hình>3. Polymorphism (Đa hình)</h3><p>Một phương thức có thể có nhiều hình thức khác nhau.</p><h3 id=4-abstraction-trừu-tượng>4. Abstraction (Trừu tượng)</h3><p>Che giấu chi tiết phức tạp, chỉ hiển thị những gì cần thiết.</p><h2 id=kết-luận>Kết luận</h2><p>Class và Object là nền tảng của lập trình hướng đối tượng trong Java. Việc hiểu rõ cách tạo và sử dụng class, object, constructor, và các access modifiers sẽ giúp bạn xây dựng các chương trình Java mạnh mẽ và dễ bảo trì. Trong bài viết tiếp theo, chúng ta sẽ tìm hiểu về Collections Framework trong Java!</p></div><nav style=display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:4rem;max-width:800px;margin-left:auto;margin-right:auto><a href=https://fucfuc1011.github.io/blog/java-collections/ style="display:flex;flex-direction:column;gap:.75rem;padding:2rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);transition:all .3s ease;box-shadow:var(--shadow-sm)"><span style=color:var(--primary);font-weight:600;font-size:.875rem;text-transform:uppercase;letter-spacing:.05em>← Bài trước</span>
+<span style=color:var(--text-primary);font-weight:600;font-size:1.125rem;line-height:1.4>Collections Framework trong Java</span>
+</a><a href=https://fucfuc1011.github.io/blog/javascript-gioi-thieu/ style="display:flex;flex-direction:column;gap:.75rem;padding:2rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);transition:all .3s ease;box-shadow:var(--shadow-sm);text-align:right"><span style=color:var(--primary);font-weight:600;font-size:.875rem;text-transform:uppercase;letter-spacing:.05em>Bài sau →</span>
+<span style=color:var(--text-primary);font-weight:600;font-size:1.125rem;line-height:1.4>JavaScript là gì? Bắt đầu với JavaScript</span></a></nav></article></div><style>nav a:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:var(--shadow-lg)}</style></main><footer class=beautiful-footer><div style="background:var(--gray-900);border-top:4px solid var(--primary);position:relative;overflow:hidden"><div style="position:absolute;top:-80px;left:10%;width:250px;height:250px;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 70%);border-radius:50%"></div><div style="position:absolute;bottom:-100px;right:10%;width:300px;height:300px;background:radial-gradient(circle,rgba(253,253,253,8%) 0%,transparent 70%);border-radius:50%"></div><div class=container><div style="position:relative;z-index:1;padding:4rem 0 3rem"><div style="background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 100%);border-radius:var(--radius-2xl);padding:3rem;text-align:center;margin-bottom:4rem;box-shadow:var(--shadow-xl)"><div style=font-size:3rem;margin-bottom:1rem>📧</div><h3 style=font-family:var(--font-display);font-size:2rem;font-weight:800;color:#fff;margin-bottom:.75rem>Đăng ký nhận bài viết mới</h3><p style=color:rgba(255,255,255,.9);font-size:1.125rem;margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto>Nhận thông báo khi có bài viết mới về Java và JavaScript</p><form style="display:flex;gap:1rem;max-width:500px;margin:0 auto"><input type=email placeholder="Email của bạn" style="flex:1;padding:1rem 1.5rem;background:#fff;border:none;border-radius:var(--radius-md);color:var(--gray-900);font-size:1rem;outline:none;box-shadow:0 4px 12px rgba(0,0,0,.1)">
+<button type=submit style="padding:1rem 2rem;background:var(--gray-900);color:#fff;border:none;border-radius:var(--radius-md);font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s ease;white-space:nowrap" onmouseover='this.style.transform="scale(1.05)"' onmouseout='this.style.transform="scale(1)"'>
+Đăng ký</button></form><p style=color:#000;font-size:.875rem;margin-top:1rem>✨ Miễn phí • Không spam</p></div><div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;margin-bottom:3rem"><div><div style=display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem><div style=width:45px;height:45px;background:var(--primary-gradient);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.75rem;box-shadow:var(--shadow-red)>⚡</div><span style=font-size:1.375rem;font-weight:800;color:#e2e2e2>Blog Lập Trình - Phạm Thành Phúc</span></div><p style=color:#fff;line-height:1.7;margin-bottom:1.5rem;font-size:.9375rem>Blog chia sẻ kiến thức về Java và JavaScript.
+Học lập trình một cách dễ hiểu và thực tế.</p><div style=display:flex;gap:.75rem><a href=https://github.com/fucfuc1011 target=_blank rel=noopener style="width:42px;height:42px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:#d1d5db;transition:all .3s ease"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374.0.0 5.373.0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931.0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176.0.0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221.0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+</a><a href=mailto:contact@example.com style="width:42px;height:42px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:#d1d5db;transition:all .3s ease"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a></div></div><div><h3 style=color:#fff;font-weight:700;font-size:1.125rem;margin-bottom:1.5rem>Liên kết</h3><ul style=list-style:none;display:flex;flex-direction:column;gap:.875rem><li><a href=/ style="color:#fff;font-size:.9375rem;transition:all .3s ease">Trang
+chủ</a></li><li><a href=/blog/ style="color:#fff;font-size:.9375rem;transition:all .3s ease">Blog</a></li><li><a href=/profile/ style="color:#fff;font-size:.9375rem;transition:all .3s ease">Giới
+thiệu</a></li></ul></div><div><h3 style=color:#fff;font-weight:700;font-size:1.125rem;margin-bottom:1.5rem>Chủ đề</h3><ul style=list-style:none;display:flex;flex-direction:column;gap:.875rem><li><a href=/blog/ style="color:#9ca3af;font-size:.9375rem;transition:all .3s ease;display:flex;justify-content:space-between;align-items:center"><span>☕ Java</span>
+<span style="background:rgba(255,255,255,.1);padding:.25rem .625rem;border-radius:999px;font-size:.75rem;font-weight:700">5</span></a></li><li><a href=/blog/ style="color:#9ca3af;font-size:.9375rem;transition:all .3s ease;display:flex;justify-content:space-between;align-items:center"><span>⚡ JavaScript</span>
+<span style="background:rgba(255,255,255,.1);padding:.25rem .625rem;border-radius:999px;font-size:.75rem;font-weight:700">4</span></a></li></ul></div></div><div style="padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center"><p style=color:#9ca3af;font-size:.875rem>© 2025 <strong style=color:#d41818>Phạm Thành Phúc</strong>.
+All rights reserved.</p><p style=color:#6b7280;font-size:.875rem>⚡ Code by <strong style=background:var(--primary-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text>Phạm
+Thành Phúc</strong></p></div></div></div></div></footer><style>.beautiful-footer a:hover{color:var(--primary-light)!important}.beautiful-footer a[style*="width: 42px"]:hover{background:var(--primary)!important;border-color:var(--primary)!important;transform:translateY(-2px)}@media(max-width:1024px){.beautiful-footer>div>.container>div>div:nth-child(2){grid-template-columns:1fr 1fr!important}}@media(max-width:640px){.beautiful-footer>div>.container>div>div:first-child form{flex-direction:column}.beautiful-footer>div>.container>div>div:first-child form button{width:100%}.beautiful-footer>div>.container>div>div:nth-child(2){grid-template-columns:1fr!important}.beautiful-footer>div>.container>div>div:last-child{flex-direction:column!important;gap:1rem;text-align:center}}</style><script src=/js/main.js></script></body></html>
