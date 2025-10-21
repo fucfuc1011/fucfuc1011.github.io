@@ -1,1122 +1,674 @@
 {{ define "main" }}
 <style>
-    .profile-hero {
-        position: relative;
-        background: linear-gradient(135deg, #DC2626 0%, #EF4444 50%, #F87171 100%);
-        padding: 5rem 2rem 4rem;
-        border-radius: 0 0 3rem 3rem;
-        overflow: hidden;
-        text-align: center;
-        margin-bottom: 4rem;
-        margin-left: -2rem;
-        margin-right: -2rem;
+    /* Professional Two-Column CV Layout */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
-    .profile-hero::before {
-        content: '';
-        position: absolute;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-        top: -100px;
-        right: -100px;
-        border-radius: 50%;
+    .cv-wrapper {
+        background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+        min-height: 100vh;
+        padding: 3rem 1rem;
     }
 
-    .profile-hero::after {
-        content: '';
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-        bottom: -80px;
-        left: -80px;
-        border-radius: 50%;
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .avatar-wrapper {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 2rem;
-    }
-
-    .avatar {
-        width: 150px;
-        height: 150px;
-        background: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 5rem;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    .cv-container {
+        max-width: 1100px;
         margin: 0 auto;
-    }
-
-    .vip-badge {
-        position: absolute;
-        top: 0;
-        right: -10px;
-        background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
-        color: #78350F;
-        padding: 0.25rem 0.75rem;
-        border-radius: 999px;
-        font-size: 0.75rem;
-        font-weight: 800;
-        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
-        animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-
-        0%,
-        100% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(1.05);
-        }
-    }
-
-    .hero-name {
-        font-size: 3rem;
-        font-weight: 900;
-        color: white;
-        margin-bottom: 0.5rem;
-    }
-
-    .hero-role {
-        font-size: 1.5rem;
-        color: rgba(255, 255, 255, 0.95);
-        font-weight: 600;
-        margin-bottom: 2rem;
-    }
-
-    .hero-socials {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .social-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.875rem 1.75rem;
         background: white;
-        color: #DC2626;
-        border-radius: 999px;
-        font-weight: 700;
-        text-decoration: none;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-    }
-
-    .social-btn:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 4rem;
-    }
-
-    .stat-card {
-        background: white;
-        border: 2px solid #E5E7EB;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-        transform: translateY(-8px);
-        border-color: #DC2626;
-        box-shadow: 0 20px 40px rgba(220, 38, 38, 0.15);
-    }
-
-    .stat-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-
-    .stat-number {
-        font-size: 2.5rem;
-        font-weight: 900;
-        color: #DC2626;
-        margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-        color: #6B7280;
-        font-weight: 600;
-        font-size: 0.875rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .profile-section {
-        margin-bottom: 4rem;
-    }
-
-    .section-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
-        border: 2px solid #DC2626;
-        border-radius: 999px;
-        color: #DC2626;
-        font-weight: 700;
-        font-size: 0.875rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .section-title {
-        font-size: 2.5rem;
-        font-weight: 900;
-        color: #111827;
-        margin-bottom: 1.5rem;
-    }
-
-    .section-description {
-        font-size: 1.125rem;
-        color: #4B5563;
-        line-height: 1.8;
-        max-width: 800px;
-        margin-bottom: 1rem;
-    }
-
-    .section-description strong {
-        color: #DC2626;
-        font-weight: 700;
-    }
-
-    .skills-categories {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-    }
-
-    .skill-category {
-        background: white;
-        border: 2px solid #E5E7EB;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        transition: all 0.3s ease;
-    }
-
-    .skill-category:hover {
-        border-color: #DC2626;
-        box-shadow: 0 12px 32px rgba(220, 38, 38, 0.1);
-    }
-
-    .category-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .category-icon {
-        font-size: 2.5rem;
-    }
-
-    .category-title {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #111827;
-    }
-
-    .skill-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
-
-    .skill-tag {
-        padding: 0.5rem 1rem;
-        border-radius: 999px;
-        font-size: 0.875rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-    .skill-tag.expert {
-        background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
-        color: white;
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    }
-
-    .skill-tag.advanced {
-        background: white;
-        color: #DC2626;
-        border: 2px solid #DC2626;
-    }
-
-    .skill-tag.intermediate {
-        background: #F3F4F6;
-        color: #6B7280;
-        border: 2px solid #E5E7EB;
-    }
-
-    .skill-tag:hover {
-        transform: translateY(-2px);
-    }
-
-    .experience-timeline {
-        position: relative;
-        padding-left: 3rem;
-    }
-
-    .experience-timeline::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        background: linear-gradient(180deg, #DC2626 0%, #F87171 100%);
-        border-radius: 999px;
-    }
-
-    .timeline-item {
-        position: relative;
-        margin-bottom: 3rem;
-        padding: 2rem;
-        background: white;
-        border: 2px solid #E5E7EB;
-        border-radius: 1.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .timeline-item::before {
-        content: '';
-        position: absolute;
-        left: -3.75rem;
-        top: 2rem;
-        width: 20px;
-        height: 20px;
-        background: #DC2626;
-        border: 4px solid white;
-        border-radius: 50%;
-        box-shadow: 0 0 0 4px #FEE2E2;
-    }
-
-    .timeline-item:hover {
-        border-color: #DC2626;
-        box-shadow: 0 12px 32px rgba(220, 38, 38, 0.1);
-        transform: translateX(8px);
-    }
-
-    .timeline-date {
-        color: #DC2626;
-        font-weight: 700;
-        font-size: 0.875rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .timeline-position {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #111827;
-        margin-bottom: 0.5rem;
-    }
-
-    .timeline-company {
-        color: #6B7280;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-
-    .timeline-description {
-        color: #4B5563;
-        line-height: 1.7;
-    }
-
-    .mission-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-    }
-
-    .mission-card {
-        background: white;
-        border: 2px solid #E5E7EB;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        transition: all 0.3s ease;
-    }
-
-    .mission-card:hover {
-        border-color: #DC2626;
-        box-shadow: 0 12px 32px rgba(220, 38, 38, 0.1);
-        transform: translateY(-8px);
-    }
-
-    .mission-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-
-    .mission-title {
-        font-size: 1.25rem;
-        font-weight: 800;
-        color: #111827;
-        margin-bottom: 0.75rem;
-    }
-
-    .mission-description {
-        color: #6B7280;
-        line-height: 1.7;
-    }
-
-    .contact-cta {
-        position: relative;
-        background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
-        border-radius: 2rem;
-        padding: 4rem 3rem;
-        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
         overflow: hidden;
-        margin-top: 4rem;
+        display: grid;
+        grid-template-columns: 350px 1fr;
     }
 
-    .contact-cta::before,
-    .contact-cta::after {
-        content: '';
-        position: absolute;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-    }
-
-    .contact-cta::before {
-        width: 300px;
-        height: 300px;
-        top: -100px;
-        right: -100px;
-    }
-
-    .contact-cta::after {
-        width: 250px;
-        height: 250px;
-        bottom: -80px;
-        left: -80px;
-    }
-
-    .cta-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .cta-title {
-        font-size: 2.5rem;
-        font-weight: 900;
+    /* Left Sidebar - Dark */
+    .cv-sidebar {
+        background: linear-gradient(180deg, #1F2937 0%, #111827 100%);
         color: white;
-        margin-bottom: 1rem;
+        padding: 3rem 2rem;
     }
 
-    .cta-description {
-        font-size: 1.25rem;
-        color: rgba(255, 255, 255, 0.95);
+    /* Profile Photo */
+    .cv-photo-container {
+        text-align: center;
         margin-bottom: 2rem;
     }
 
-    .cta-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
+    .cv-photo {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 5px solid #DC2626;
+        margin: 0 auto 1rem;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
     }
 
-    .cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 1rem 2rem;
-        border-radius: 999px;
-        font-weight: 700;
-        font-size: 1rem;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-
-    .cta-btn.primary {
-        background: white;
-        color: #DC2626;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    }
-
-    .cta-btn.secondary {
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        border: 2px solid white;
-    }
-
-    .cta-btn:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    @media (max-width: 768px) {
-        .profile-hero {
-            padding: 3rem 1.5rem;
-        }
-
-        .hero-name {
-            font-size: 2rem;
-        }
-
-        .hero-role {
-            font-size: 1.125rem;
-        }
-
-        .section-title {
-            font-size: 2rem;
-        }
-
-        .experience-timeline {
-            padding-left: 2rem;
-        }
-
-        .timeline-item::before {
-            left: -2.75rem;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .skills-categories,
-        .mission-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
-
-<div class="container">
-    <!-- Hero Section -->
-    <div class="profile-hero">
-        <div class="hero-content">
-            <div class="avatar-wrapper">
-                <div class="avatar">
-                    <img src="/images/avatar.jpg" alt="Phạm Thành Phúc"
-                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                </div>
-                <span class="vip-badge">⭐ PRO DEV</span>
-            </div>
-
-            <h1 class="hero-name">Phạm Thành Phúc</h1>
-            <p class="hero-role">🚀 Full-Stack Developer & Tech Enthusiast</p>
-
-            <div class="hero-socials">
-                <a href="https://github.com/fucfuc1011" class="social-btn" target="_blank">
-                    <span>💻</span>
-                    <span>GitHub</span>
-                </a>
-                <a href="mailto:contact@example.com" class="social-btn">
-                    <span>📧</span>
-                    <span>Email</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Stats Section -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">📝</div>
-            <div class="stat-number">50+</div>
-            <div class="stat-label">Bài viết</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">💼</div>
-            <div class="stat-number">10+</div>
-            <div class="stat-label">Chủ đề</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">⏱️</div>
-            <div class="stat-number">5+</div>
-            <div class="stat-label">Năm kinh nghiệm</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-number">30+</div>
-            <div class="stat-label">Dự án</div>
-        </div>
-    </div>
-
-   <!-- About Section -->
-<div class="profile-section">
-    <div class="profile-container">
-        <div class="profile-content">
-            <div class="section-badge">
-                <span>💡</span>
-                <span>About Me</span>
-            </div>
-
-            <h2 class="section-title">Xin chào, tôi là Phạm Thành Phúc! 👋</h2>
-
-            <p class="section-description">
-                Tôi là một <strong>Full-Stack Developer</strong> với niềm đam mê mãnh liệt về lập trình và công nghệ.
-                Với nhiều năm kinh nghiệm làm việc với <strong>Java</strong> và <strong>JavaScript</strong>,
-                tôi muốn chia sẻ những kiến thức và kinh nghiệm của mình để giúp cộng đồng lập trình viên Việt Nam phát
-                triển.
-            </p>
-            <p class="section-description">
-                Blog này được tạo ra với mục đích cung cấp những bài viết <strong>chất lượng cao</strong>,
-                <strong>dễ hiểu</strong> và <strong>thực tế</strong> về lập trình cho những ai đang bắt đầu
-                hoặc muốn nâng cao kỹ năng của mình.
-            </p>
-        </div>
-
-        <div class="profile-image">
-            <div class="avatar">
-                <img src="/images/phucpham.jpg" alt="Phạm Thành Phúc">
-            </div>
-        </div>
-    </div>
-</div>
-
-    <!-- Skills Section -->
-    <div class="profile-section">
-        <div class="section-badge">
-            <span>⚡</span>
-            <span>Skills</span>
-        </div>
-
-        <h2 class="section-title">Chuyên môn của tôi</h2>
-
-        <div class="skills-categories">
-            <div class="skill-category">
-                <div class="category-header">
-                    <div class="category-icon">☕</div>
-                    <h3 class="category-title">Backend</h3>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag expert">Java</span>
-                    <span class="skill-tag expert">Spring Boot</span>
-                    <span class="skill-tag advanced">Node.js</span>
-                    <span class="skill-tag advanced">REST API</span>
-                    <span class="skill-tag intermediate">Microservices</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <div class="category-header">
-                    <div class="category-icon">⚛️</div>
-                    <h3 class="category-title">Frontend</h3>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag expert">JavaScript</span>
-                    <span class="skill-tag expert">React</span>
-                    <span class="skill-tag advanced">HTML/CSS</span>
-                    <span class="skill-tag advanced">TypeScript</span>
-                    <span class="skill-tag intermediate">Vue.js</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <div class="category-header">
-                    <div class="category-icon">💾</div>
-                    <h3 class="category-title">Database</h3>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag expert">SQL</span>
-                    <span class="skill-tag expert">MySQL</span>
-                    <span class="skill-tag advanced">PostgreSQL</span>
-                    <span class="skill-tag advanced">MongoDB</span>
-                    <span class="skill-tag intermediate">Redis</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <div class="category-header">
-                    <div class="category-icon">🛠️</div>
-                    <h3 class="category-title">Tools & Others</h3>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag expert">Git</span>
-                    <span class="skill-tag expert">Docker</span>
-                    <span class="skill-tag advanced">AWS</span>
-                    <span class="skill-tag advanced">CI/CD</span>
-                    <span class="skill-tag intermediate">Kubernetes</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Experience Timeline -->
-    <div class="profile-section">
-        <div class="section-badge">
-            <span>💼</span>
-            <span>KINH NGHIỆM</span>
-        </div>
-
-        <h2 class="section-title">Hành trình nghề nghiệp</h2>
-
-        <div class="experience-timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">📅 2025 - Hiện tại</div>
-                <h3 class="timeline-position">Senior Full-Stack Developer</h3>
-                <div class="timeline-company">🏢 Tech Company Vietnam</div>
-                <p class="timeline-description">
-                    Phát triển và duy trì các ứng dụng web quy mô lớn sử dụng Java Spring Boot và React.
-                    Quản lý team và hướng dẫn các junior developers. Thiết kế kiến trúc hệ thống và tối ưu hiệu năng.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-date">📅 2023 - 2025</div>
-                <h3 class="timeline-position">Full-Stack Developer</h3>
-                <div class="timeline-company">🏢 Software Solutions Inc.</div>
-                <p class="timeline-description">
-                    Xây dựng các ứng dụng web và mobile sử dụng công nghệ hiện đại.
-                    Làm việc với team quốc tế và tham gia vào nhiều dự án thú vị cho khách hàng từ nhiều quốc gia.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-date">📅 2021 - 2023</div>
-                <h3 class="timeline-position">Junior Developer</h3>
-                <div class="timeline-company">🏢 StartUp Vietnam</div>
-                <p class="timeline-description">
-                    Bắt đầu sự nghiệp với vai trò Junior Developer. Học hỏi và phát triển kỹ năng lập trình,
-                    tham gia các dự án nhỏ và dần tiếp cận các dự án phức tạp hơn.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mission Section -->
-    <div class="profile-section">
-        <div class="section-badge">
-            <span>🎯</span>
-            <span>SỨ MỆNH</span>
-        </div>
-
-        <h2 class="section-title">Mục tiêu của tôi</h2>
-
-        <div class="mission-grid">
-            <div class="mission-card">
-                <div class="mission-icon">✍️</div>
-                <h3 class="mission-title">Tạo nội dung chất lượng</h3>
-                <p class="mission-description">
-                    Viết những bài viết chi tiết, dễ hiểu về lập trình, giúp người học tiếp cận kiến thức một cách dễ
-                    dàng nhất.
-                </p>
-            </div>
-
-            <div class="mission-card">
-                <div class="mission-icon">🌱</div>
-                <h3 class="mission-title">Hỗ trợ người mới</h3>
-                <p class="mission-description">
-                    Giúp những người mới bắt đầu học lập trình có thể tiếp cận dễ dàng hơn thông qua các bài viết từ cơ
-                    bản đến nâng cao.
-                </p>
-            </div>
-
-            <div class="mission-card">
-                <div class="mission-icon">👥</div>
-                <h3 class="mission-title">Xây dựng cộng đồng</h3>
-                <p class="mission-description">
-                    Tạo ra một cộng đồng học tập tích cực, nơi mọi người có thể chia sẻ và học hỏi lẫn nhau.
-                </p>
-            </div>
-
-            <div class="mission-card">
-                <div class="mission-icon">🚀</div>
-                <h3 class="mission-title">Cập nhật công nghệ</h3>
-                <p class="mission-description">
-                    Luôn cập nhật những kiến thức và công nghệ mới nhất trong lĩnh vực lập trình để chia sẻ với cộng
-                    đồng.
-                </p>
-            </div>
-        </div>
-    </div>
-
- 
-<style>
-/* ==========================================
-   CONTACT SECTION STYLES
-   ========================================== */
-
-/* Contact Section Container */
-.contact-section {
-    background: #F9FAFB;
-    padding: 4rem 2rem;
-    border-radius: 24px;
-    margin-top: 4rem;
-}
-
-.contact-container {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* Contact Main Box */
-.contact-main-box {
-    background: #FFFFFF;
-    border: 2px solid #E5E7EB;
-    border-radius: 20px;
-    padding: 3rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* Contact Header */
-.contact-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.contact-header-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    display: inline-block;
-}
-
-.contact-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1F2937;
-    margin: 0 0 0.5rem 0;
-}
-
-.contact-subtitle {
-    font-size: 1.125rem;
-    color: #6B7280;
-    margin: 0;
-}
-
-/* Contact Info Grid */
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-}
-
-/* Contact Card */
-.contact-card {
-    background: #FFFFFF;
-    padding: 1.75rem;
-    border-radius: 12px;
-    border: 1px solid #E5E7EB;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.contact-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    border-color: #D1D5DB;
-}
-
-/* Contact Card Icon */
-.contact-icon {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.contact-icon svg {
-    width: 24px;
-    height: 24px;
-    color: white;
-}
-
-/* Icon Colors */
-.icon-email {
-    background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
-}
-
-.icon-phone {
-    background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%);
-}
-
-.icon-location {
-    background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%);
-}
-
-.icon-website {
-    background: linear-gradient(135deg, #30CFD0 0%, #330867 100%);
-}
-
-.contact-card:hover .contact-icon {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* Contact Card Content */
-.contact-info {
-    flex: 1;
-}
-
-.contact-label {
-    font-size: 0.875rem;
-    color: #6B7280;
-    margin-bottom: 0.35rem;
-    font-weight: 600;
-    display: block;
-}
-
-.contact-value {
-    font-size: 1rem;
-    color: #1F2937;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
-    transition: color 0.3s ease;
-}
-
-a.contact-value:hover {
-    color: #3B82F6;
-}
-
-/* CTA Box */
-.contact-cta-box {
-    background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
-    padding: 2.5rem;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-}
-
-.cta-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 0.75rem 0;
-}
-
-.cta-description {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0 0 2rem 0;
-    line-height: 1.6;
-}
-
-/* CTA Buttons */
-.cta-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.cta-btn svg {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-}
-
-.cta-btn:hover svg {
-    transform: scale(1.1);
-}
-
-.btn-primary {
-    background: #FFFFFF;
-    color: #667EEA;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: white;
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.8);
-    transform: translateY(-2px);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .contact-section {
-        padding: 3rem 1.5rem;
-    }
-
-    .contact-title {
-        font-size: 1.75rem;
-    }
-    
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .cta-buttons {
-        flex-direction: column;
-    }
-
-    .cta-btn {
+    .cv-photo img {
         width: 100%;
-        justify-content: center;
-    }
-    
-    .contact-cta-box {
-        padding: 2rem 1.5rem;
+        height: 100%;
+        object-fit: cover;
     }
 
-    .cta-title {
-        font-size: 1.25rem;
+    .cv-name {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 0.5rem;
+        text-align: center;
     }
 
-    .cta-description {
-        font-size: 0.9rem;
+    .cv-title {
+        font-size: 1rem;
+        color: #DC2626;
+        font-weight: 600;
+        text-align: center;
+        padding: 0.5rem 1rem;
+        background: rgba(220, 38, 38, 0.1);
+        border-radius: 20px;
+        display: inline-block;
+        width: 100%;
     }
-}
 
-@media (max-width: 480px) {
-    .contact-title {
-        font-size: 1.5rem;
+    /* Sidebar Sections */
+    .sidebar-section {
+        margin-top: 2.5rem;
     }
 
-    .contact-card {
-        padding: 1.25rem;
+    .sidebar-section-title {
+        font-size: 0.875rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #DC2626;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid rgba(220, 38, 38, 0.3);
+    }
+
+    /* Contact Info */
+    .contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: start;
+        gap: 0.75rem;
+        font-size: 0.875rem;
     }
 
     .contact-icon {
-        width: 44px;
-        height: 44px;
-        min-width: 44px;
+        width: 20px;
+        height: 20px;
+        color: #DC2626;
+        flex-shrink: 0;
+        margin-top: 2px;
     }
 
-    .contact-icon svg {
-        width: 22px;
-        height: 22px;
+    .contact-text {
+        color: #E5E7EB;
+        line-height: 1.5;
+        word-break: break-word;
     }
+
+    .contact-text a {
+        color: #E5E7EB;
+        text-decoration: none;
+    }
+
+    .contact-text a:hover {
+        color: #DC2626;
+    }
+
+    /* Skills */
+    .skill-item {
+        margin-bottom: 1.25rem;
+    }
+
+    .skill-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .skill-name {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: white;
+    }
+
+    .skill-percent {
+        font-size: 0.75rem;
+        color: #9CA3AF;
+    }
+
+    .skill-bar {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .skill-progress {
+        height: 100%;
+        background: linear-gradient(90deg, #DC2626 0%, #EF4444 100%);
+        border-radius: 3px;
+        transition: width 1s ease;
+    }
+
+    /* Languages */
+    .language-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .language-item:last-child {
+        border-bottom: none;
+    }
+
+    .language-name {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: white;
+    }
+
+    .language-level {
+        font-size: 0.75rem;
+        color: #DC2626;
+        background: rgba(220, 38, 38, 0.2);
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+    }
+
+    /* Right Content */
+    .cv-content {
+        padding: 3rem;
+    }
+
+    /* About Section */
+    .about-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .about-text {
+        color: #4B5563;
+        line-height: 1.8;
+        font-size: 0.95rem;
+        text-align: justify;
+    }
+
+    /* Content Sections */
+    .content-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #1F2937;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 3px solid #DC2626;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        position: relative;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: #EF4444;
+    }
+
+    /* Experience Items */
+    .experience-item,
+    .education-item {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 2rem;
+        border-left: 2px solid #E5E7EB;
+    }
+
+    .experience-item::before,
+    .education-item::before {
+        content: '';
+        position: absolute;
+        left: -6px;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        background: #DC2626;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 0 0 2px #DC2626;
+    }
+
+    .item-date {
+        font-size: 0.8rem;
+        color: white;
+        background: #DC2626;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        display: inline-block;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+    }
+
+    .item-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #1F2937;
+        margin-bottom: 0.25rem;
+    }
+
+    .item-company {
+        font-size: 0.95rem;
+        color: #DC2626;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+
+    .item-description {
+        color: #6B7280;
+        line-height: 1.7;
+        font-size: 0.9rem;
+    }
+
+    .item-description ul {
+        margin-left: 1.25rem;
+        margin-top: 0.5rem;
+    }
+
+    .item-description li {
+        margin-bottom: 0.4rem;
+        position: relative;
+    }
+
+    .item-description li::marker {
+        color: #DC2626;
+    }
+
+    /* Achievements Grid */
+    .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 0;
+    }
+.badge-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
+.badge-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+    .achievement-card {
+        background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+        padding: 1.25rem;
+        border-radius: 8px;
+        border-left: 4px solid #DC2626;
+        display: flex;
+        align-items: start;
+        gap: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .achievement-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+    }
+
+    .achievement-icon {
+        font-size: 1.75rem;
+        flex-shrink: 0;
+    }
+
+    .achievement-text {
+        font-size: 0.875rem;
+        color: #991B1B;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    /* Download Button */
+    .cv-download {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 2px solid #E5E7EB;
+    }
+
+    .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 2.5rem;
+        background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        border-radius: 50px;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(220, 38, 38, 0.4);
+    }
+
+    .download-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+        .cv-container {
+            grid-template-columns: 1fr;
+        }
+
+        .cv-sidebar {
+            padding: 2rem 1.5rem;
+        }
+
+        .cv-content {
+            padding: 2rem 1.5rem;
+        }
+
+        .achievements-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Print Styles */
+    @media print {
+        .cv-wrapper {
+            background: white;
+            padding: 0;
+        }
+
+        .cv-container {
+            box-shadow: none;
+            max-width: 100%;
+        }
+
+        .cv-download {
+            display: none;
+        }
+    }
 </style>
 
-<!-- Contact Section -->
-<div class="contact-section">
-    <div class="contact-container">
-        <!-- Header -->
-        <div class="contact-header">
-            <div class="contact-header-icon">📬</div>
-            <h2 class="contact-title">Thông tin liên hệ</h2>
-            <p class="contact-subtitle">Bạn có thể liên hệ với tôi qua các kênh sau</p>
+<div class="cv-wrapper">
+    <div class="cv-container">
+        <!-- Left Sidebar -->
+        <div class="cv-sidebar">
+            <!-- Profile Photo & Name -->
+            <div class="cv-photo-container">
+                <div class="cv-photo">
+                    <img src="/images/avatar.jpg" alt="Phạm Thành Phúc">
+                </div>
+                <h1 class="cv-name">PHẠM THÀNH PHÚC</h1>
+                <div class="cv-title">Full-Stack Developer</div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Liên Hệ</h3>
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="5" width="18" height="14" rx="2" />
+                            <path d="M3 7l9 6 9-6" />
+                        </svg>
+                        <div class="contact-text">
+                            <a href="mailto:thanhphucboss.98@gmail.com">thanhphucboss.98@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" />
+                            <path d="M12 18h.01" />
+                        </svg>
+                        <div class="contact-text">+84 352 035 929</div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        <div class="contact-text">TP. Hồ Chí Minh, Việt Nam</div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                        </svg>
+                        <div class="contact-text">
+                            <a href="https://github.com/fucfuc1011" target="_blank">github.com/fucfuc1011</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Kỹ Năng Chính</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Java & Spring Boot</span>
+                        <span class="skill-percent">95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 95%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">JavaScript & React</span>
+                        <span class="skill-percent">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Node.js & Express</span>
+                        <span class="skill-percent">85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">MySQL & PostgreSQL</span>
+                        <span class="skill-percent">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Docker & AWS</span>
+                        <span class="skill-percent">80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Git & CI/CD</span>
+                        <span class="skill-percent">95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 95%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Languages -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Ngoại Ngữ</h3>
+                <div class="language-item">
+                    <span class="language-name">Tiếng Việt</span>
+                    <span class="language-level">Native</span>
+                </div>
+                <div class="language-item">
+                    <span class="language-name">Tiếng Anh</span>
+                    <span class="language-level">Advanced</span>
+                </div>
+                <div class="language-item">
+                    <span class="language-name">Tiếng Nhật</span>
+                    <span class="language-level">Basic</span>
+                </div>
+            </div>
         </div>
-        
-        <!-- Contact Grid -->
-        <div class="contact-grid">
-            <!-- Email Card -->
-            <div class="contact-card">
-                <div class="contact-icon icon-email">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="5" width="18" height="14" rx="2"/>
-                        <path d="M3 7l9 6 9-6"/>
-                    </svg>
+
+        <!-- Right Content -->
+        <div class="cv-content">
+            <!-- About -->
+            <div class="about-section">
+                <div class="section-title">Giới Thiệu</div>
+                <p class="about-text">
+                    Full-Stack Developer với 5+ năm kinh nghiệm chuyên sâu trong phát triển ứng dụng web sử dụng Java
+                    Spring Boot,
+                    JavaScript và React. Thành thạo trong việc thiết kế kiến trúc microservices, tối ưu hiệu năng hệ
+                    thống và triển khai
+                    CI/CD pipeline. Có khả năng làm việc độc lập và quản lý team, đam mê học hỏi công nghệ mới và chia
+                    sẻ kiến thức
+                    qua blog cá nhân với 50+ bài viết chuyên môn.
+                </p>
+            </div>
+
+            <!-- Experience -->
+            <div class="content-section">
+                <div class="section-title">Kinh Nghiệm Làm Việc</div>
+
+                <div class="experience-item">
+                    <div class="item-date">01/2025 - Hiện tại</div>
+                    <h3 class="item-title">Senior Full-Stack Developer</h3>
+                    <div class="item-company">Tech Company Vietnam • TP.HCM</div>
+                    <div class="item-description">
+                        <ul>
+                            <li>Lãnh đạo team 5 developers trong việc phát triển hệ thống quản lý doanh nghiệp quy mô
+                                lớn</li>
+                            <li>Thiết kế và triển khai kiến trúc microservices với Spring Boot, tối ưu hiệu năng 40%
+                            </li>
+                            <li>Xây dựng CI/CD pipeline với Jenkins và Docker, giảm thời gian deployment từ 2 giờ xuống
+                                20 phút</li>
+                            <li>Mentor junior developers, review code và đảm bảo coding standards</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="contact-info">
-                    <span class="contact-label">Email</span>
-                    <a href="mailto:thanhphucboss.98@gmail.com" class="contact-value">thanhphucboss.98@gmail.com</a>
+
+                <div class="experience-item">
+                    <div class="item-date">06/2023 - 12/2024</div>
+                    <h3 class="item-title">Full-Stack Developer</h3>
+                    <div class="item-company">Software Solutions Inc. • Remote</div>
+                    <div class="item-description">
+                        <ul>
+                            <li>Phát triển ứng dụng e-commerce phục vụ 100k+ users với Java Spring Boot và React</li>
+                            <li>Tích hợp payment gateway (VNPay, Momo) và shipping APIs (GHN, Viettel Post)</li>
+                            <li>Tối ưu database queries, giảm response time API xuống 60%</li>
+                            <li>Làm việc với team international, sử dụng Agile/Scrum methodology</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="item-date">03/2022 - 05/2023</div>
+                    <h3 class="item-title">Junior Developer</h3>
+                    <div class="item-company">StartUp Vietnam • TP.HCM</div>
+                    <div class="item-description">
+                        <ul>
+                            <li>Phát triển RESTful APIs và admin dashboard cho hệ thống quản lý nội bộ</li>
+                            <li>Viết unit tests và integration tests, đạt code coverage 85%</li>
+                            <li>Fix bugs và implement new features theo Jira tickets</li>
+                            <li>Tham gia code review và học hỏi best practices từ senior team</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Phone Card -->
-            <div class="contact-card">
-                <div class="contact-icon icon-phone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="5" y="2" width="14" height="20" rx="2"/>
-                        <path d="M12 18h.01"/>
-                    </svg>
-                </div>
-                <div class="contact-info">
-                    <span class="contact-label">Điện thoại</span>
-                    <a href="tel:+84352035929" class="contact-value">+84 352 035 929</a>
-                </div>
-            </div>
-            
-            <!-- Location Card -->
-            <div class="contact-card">
-                <div class="contact-icon icon-location">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                    </svg>
-                </div>
-                <div class="contact-info">
-                    <span class="contact-label">Địa chỉ</span>
-                    <span class="contact-value">TP. Hồ Chí Minh, Việt Nam</span>
+
+            <!-- Education -->
+            <div class="content-section">
+                <div class="section-title">Học Vấn</div>
+                <div class="education-item">
+                    <div class="item-date">2017 - 2021</div>
+                    <h3 class="item-title">Kỹ sư Công Nghệ Phần Mềm</h3>
+                    <div class="item-company">Đại học Công Nghệ TP.HCM (HUTECH) </div>
+                    <div class="item-description">
+                        GPA: 3.6/4.0 • Chuyên ngành: Công Nghệ Phần Mềm
+                    </div>
                 </div>
             </div>
-            
-            <!-- Website Card -->
-            <div class="contact-card">
-                <div class="contact-icon icon-website">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                    </svg>
+
+            <!-- Achievements -->
+            <!-- Achievements -->
+            <div class="content-section">
+                <div class="section-title">🏆 Thành Tựu & Chứng Chỉ</div>
+                <div class="achievements-grid">
+                    <div class="badge-wrapper">
+                        <div data-iframe-width="200" data-iframe-height="200"
+                            data-share-badge-id="131d7b3f-fc62-4db0-8ffd-05afbcfabb69"
+                            data-share-badge-host="https://www.credly.com"></div>
+                    </div>
+                    <div class="badge-wrapper">
+                        <div data-iframe-width="200" data-iframe-height="200"
+                            data-share-badge-id="ab70700b-d35b-43a6-be2e-0f31025b9818"
+                            data-share-badge-host="https://www.credly.com"></div>
+                    </div>
+                    <div class="badge-wrapper">
+                        <div data-iframe-width="200" data-iframe-height="200"
+                            data-share-badge-id="916ff5c8-6b94-4562-8f2a-d7443a7e43db"
+                            data-share-badge-host="https://www.credly.com"></div>
+                    </div>
                 </div>
-                <div class="contact-info">
-                    <span class="contact-label">Website</span>
-                    <a href="https://phamthanhphuc.dev" class="contact-value">phamthanhphuc.dev</a>
-                </div>
+                <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
             </div>
-        </div>
-        
-        <!-- CTA Box -->
-        <div class="contact-cta-box">
-            <h3 class="cta-title">Sẵn sàng nhận dự án freelance</h3>
-            <p class="cta-description">
-                Bạn có dự án hoặc muốn trao đổi về lập trình? Hãy liên hệ với tôi ngay hôm nay!
-            </p>
-            <div class="cta-buttons">
-                <a href="mailto:thanhphucboss.98@gmail.com" class="cta-btn btn-primary">
+
+            <!-- Download -->
+            <div class="cv-download">
+                <a href="/cv/pham-thanh-phuc-cv.pdf" class="download-btn" download>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="5" width="18" height="14" rx="2"/>
-                        <path d="M3 7l9 6 9-6"/>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
-                    <span>Gửi Email</span>
-                </a>
-                <a href="/blog/" class="cta-btn btn-secondary">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-                    </svg>
-                    <span>Xem Blog</span>
+                    <span>Tải CV PDF</span>
                 </a>
             </div>
         </div>
